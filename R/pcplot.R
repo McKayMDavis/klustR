@@ -34,7 +34,12 @@
 #' @import htmlwidgets
 #'
 #' @export
-pcplot <- function(data, clusters, barColor = "steelblue", colorScheme = "schemeCategory10", width = NULL, height = NULL) {
+pcplot <- function(data,
+                   clusters,
+                   barColor = "steelblue",
+                   colorScheme = "schemeCategory10",
+                   width = NULL,
+                   height = NULL) {
 
   PC <- getPC(data, clusters)
 

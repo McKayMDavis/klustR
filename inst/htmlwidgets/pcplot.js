@@ -10,16 +10,17 @@ HTMLWidgets.widget({
     d3.select(el)
       .append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      .style("font-family", "Arial, Helvetica, sans-serif");
 
     //Return a bunch of values accessible in the instance object
     return {
       x: null,
       pc: null,
       currPlot: null,
-
-
-
+////////////////////////////////////////////////////////////////////////////////
+// Function to draw a dimension reduced dot plot of clusters.
+////////////////////////////////////////////////////////////////////////////////
       pcaPlot: function(instance) {
 
         //Set current plot type
@@ -38,35 +39,30 @@ HTMLWidgets.widget({
         pcDat = x.PC;
         pvDat = x.PVE;
         idxs = x.idxs;
-        idx1 = idxs[0] - 1; // Subtract one to convert to JS indx instead of R indx
+        idx1 = idxs[0] - 1; //Convert to JS indx instead of R indx
         idx2 = idxs[1] - 1;
         pve1 = pvDat[idx1].PVEs * 100;
         pve2 = pvDat[idx2].PVEs * 100;
 
-        // Set x values, scale, map and axis
-        var xValue = function(d) { return Object.values(d)[idx1]; },
+        //Settup x
+        var xValue = d => Object.values(d)[idx1],
           xScale = d3.scaleLinear().range([0, width]),
-          xMap = function(d) { return xScale(xValue(d)); },
+          xMap = d => xScale(xValue(d)),
           xAxis = d3.axisBottom(xScale);
 
-        // Set y values, scale, map and axis
-        var yValue = function(d) { return Object.values(d)[idx2]; },
+        //Settup y
+        var yValue = d => Object.values(d)[idx2],
           yScale = d3.scaleLinear().range([height, 0]),
-          yMap = function(d) { return yScale(yValue(d)); },
+          yMap = d => yScale(yValue(d)),
           yAxis = d3.axisLeft(yScale);
 
-        // Set fill color scheme
-        var cValue = function(d) { return d.clusters;},
+        //Settup color scheme
+        var cValue = d => d.clusters,
           color = (typeof(d3[colorScheme]) === "undefined") ?
             d3.scaleOrdinal().range(colorScheme) :
             d3.scaleOrdinal(d3[colorScheme]);
 
-        // Create SVG (graphical area)
-        var svg = d3.select("svg")
-          .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        // Add tooltip
+        //Tooltip
         var tooltip = d3.select(el)
           .append("div")
           .attr("class", "tooltip")
@@ -74,13 +70,19 @@ HTMLWidgets.widget({
           .style("width", "200px")
           .style("height", "28px")
           .style("pointer-events", "none")
-          .style("font-weight", "bold");
+          .style("font-weight", "bold")
+          .style("font-size", "14px");
 
-        // Set domain for the data with a buffer so points don't overlap the axes
+        //Append plot
+        var svg = d3.select("svg")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        //Set domain for the data with a buffer so points don't overlap the axes
         xScale.domain([d3.min(pcDat, xValue)-1, d3.max(pcDat, xValue)+1]);
         yScale.domain([d3.min(pcDat, yValue)-1, d3.max(pcDat, yValue)+1]);
 
-        // X-axis
+        //X-axis
         svg.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -91,6 +93,7 @@ HTMLWidgets.widget({
           .attr("x", width)
           .attr("y", -6)
           .style("text-anchor", "end")
+          .style("cursor", "pointer")
           .on("mouseover", function() {
             d3.select(this).transition()
               .style("font-weight", "bold");
@@ -109,7 +112,7 @@ HTMLWidgets.widget({
         	})
           .text("PC1 - " + Number.parseFloat(pve1).toPrecision(4) + "%");
 
-        // Y-axis
+        //Y-axis
         svg.append("g")
           .attr("class", "y axis")
           .call(yAxis)
@@ -121,6 +124,7 @@ HTMLWidgets.widget({
           .attr("y", 6)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
+          .style("cursor", "pointer")
           .on("mouseover", function() {
             d3.select(this).transition()
               .style("font-weight", "bold");
@@ -139,27 +143,28 @@ HTMLWidgets.widget({
         	})
           .text("PC2 - " + Number.parseFloat(pve2).toPrecision(4) + "%");
 
-        // Draw points and add dynamic affects for mouseover points
+        //Draw points and add dynamic affects for mouseover points
         svg.selectAll(".dot")
           .data(pcDat)
           .enter()
           .append("circle")
           .attr("class", "dot")
-          .attr("id", function(d) { return "dot" + d.clusters; })
+          .attr("id", d => "dot" + d.clusters)
           .attr("r", 3.5)
           .attr("cx", xMap)
           .attr("cy", yMap)
-          .style("fill", function(d) { return color(cValue(d)); })
+          .style("fill", d => color(cValue(d)))
           .on("mouseover", function(d) {
             var currentDot = this;
-            svg.selectAll(".dot").filter(function(d,i) { return (this !== currentDot); })
+            svg.selectAll(".dot")
+              .filter(function() { return (this !== currentDot); })
               .transition()
               .duration(200)
-              .style("opacity", 0.2);
+              .style("opacity", 0.1);
             tooltip.transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip.html(d._row + "<br/> (" + xValue(d) + ", " + yValue(d) + ")")
+            tooltip.html(d._row)
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -174,13 +179,13 @@ HTMLWidgets.widget({
               .style("opacity", 0);
           });
 
-        // Draw legend area
+        //Draw legend area
         var legend = svg.selectAll(".legend")
           .data(color.domain())
           .enter()
           .append("g")
           .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+          .attr("transform", (d, i) => { return "translate(0," + i * 20 + ")"; })
           .on("click", function(d) {
             var currentGroupOpacity = svg.selectAll('#dot' + d).style("opacity"),
                 allOthersOpacity = svg.selectAll('.dot:not(#dot' + d + ')').style("opacity");
@@ -199,24 +204,25 @@ HTMLWidgets.widget({
             }
           });
 
-        // Draw legend colors
+        //Draw legend colors
         legend.append("rect")
           .attr("x", width - 18)
           .attr("width", 18)
           .attr("height", 18)
-          .style("fill", color);
+          .style("fill", color)
+          .style("cursor", "pointer");
 
-        // Draw legend labels
+        //Draw legend labels
         legend.append("text")
           .attr("x", width - 24)
           .attr("y", 9)
           .attr("dy", ".35em")
           .style("text-anchor", "end")
-          .text(function(d) { return d; });
+          .text(d => d);
     },
-
-
-
+////////////////////////////////////////////////////////////////////////////////
+// Function to draw a bar chart of PC contributions
+////////////////////////////////////////////////////////////////////////////////
     barChart: function (instance) {
 
       //Set current plot type
@@ -235,44 +241,48 @@ HTMLWidgets.widget({
       cont = x.cont;
       thresh = x.thresh;
 
-      var xScale = d3.scaleBand()
-        .rangeRound([0, width])
-        .padding(0.1);
+      //Settup x
+      var xValue = d => d._row,
+        xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+        xMap = d => xScale(xValue(d)),
+        xAxis = d3.axisBottom(xScale);
 
-      var yScale = d3.scaleLinear()
-        .rangeRound([height, 0]);
+      //Settup y
+      var yValue = d => d[component],
+        yScale = d3.scaleLinear().rangeRound([height, 0]),
+        yMap = d => yScale(yValue(d)),
+        yAxis = d3.axisLeft(yScale);
 
-
+      //Append plot
       var svg = d3.select("svg")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    	xScale.domain(cont.map(function (d) { return d._row; }));
-    	yScale.domain([0, d3.max(cont, function (d) { return d[component]; })]);
+      //Domains
+    	xScale.domain(cont.map(xValue));
+    	yScale.domain([0, d3.max(cont, yValue)]);
 
+      //X-axis
     	svg.append("g")
     	  .attr("transform", "translate(0," + height + ")")
-    	  .call(d3.axisBottom(xScale));
+    	  .call(xAxis);
 
-      //This text has potential to be covered by bars......
+      //Y-axis
     	svg.append("g")
-    	  .call(d3.axisLeft(yScale))
-    	  .append("text")
-    	  .attr("fill", "#000")
-    	  .attr("transform", "rotate(-90)")
-    	  .attr("y", 6)
-    	  .attr("dy", "0.71em");
+    	  .call(yAxis);
 
+      //Add bars
     	svg.selectAll(".bar")
     	  .data(cont)
     	  .enter().append("rect")
     	  .style("fill", barColor)
     	  .attr("class", "bar")
-    	  .attr("x", function (d) { return xScale(d._row); })
-        .attr("y", function (d) { return yScale(d[component]); })
+    	  .attr("x", d => xMap(d))
+        .attr("y", d => yMap(d))
     	  .attr("width", xScale.bandwidth())
-    	  .attr("height", function (d) { return height - yScale(d[component]); });
+    	  .attr("height", d => height - yMap(d));
 
+      //Add cuttoff line
     	svg.append("line")
     	  .attr("x1", 0)
     	  .attr("x2", width)
@@ -282,6 +292,7 @@ HTMLWidgets.widget({
     	  .style("stroke-width", 1.5)
     	  .style("stroke-dasharray", ("3, 3"));
 
+      //Plot title
     	svg.append("text")
         .attr("x", (100)) // I'm not sure on this
         .attr("y", 0 - (margin.top / 3))
@@ -289,12 +300,14 @@ HTMLWidgets.widget({
         .style("font-size", "16px")
         .text("Contribution (%) of Variables to " + component);
 
+      //Return button
       svg.append("text")
         .attr("x", (width - width / 10)) // Or this
         .attr("y", 0 - (margin.top / 3))
         .attr("text-anchor", "middle")
         .style("font-size", "12px")
         .style("text-decoration", "underline")
+        .style("cursor", "pointer")
         .on("click", function() {
           d3.select("svg").selectAll("*").transition()
             .duration(500)
