@@ -4,7 +4,7 @@
 \alias{parallelcoords-shiny}
 \alias{parallelcoordsOutput}
 \alias{renderParallelcoords}
-\title{Shiny bindings for widget2}
+\title{Shiny bindings for klustR}
 \usage{
 parallelcoordsOutput(outputId, width = "100\%", height = "400px")
 
@@ -17,7 +17,7 @@ renderParallelcoords(expr, env = parent.frame(), quoted = FALSE)
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 string and have \code{'px'} appended.}
 
-\item{expr}{An expression that generates a widget2}
+\item{expr}{An expression that generates a klustR}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 
@@ -25,6 +25,6 @@ string and have \code{'px'} appended.}
 is useful if you want to save an expression in a variable.}
 }
 \description{
-Output and render functions for using widget2 within Shiny
+Output and render functions for using klustR within Shiny
 applications and interactive Rmd documents.
 }
