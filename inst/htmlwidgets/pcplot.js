@@ -48,16 +48,16 @@ HTMLWidgets.widget({
           height = instance.height;
 
         //User opts
-        colorScheme = x.colorScheme;
+        var colorScheme = x.colorScheme;
 
         //Calculations
-        pcDat = x.PC;
-        pvDat = x.PVE;
-        idxs = x.idxs;
-        idx1 = idxs[0] - 1; //Convert to JS indx instead of R indx
-        idx2 = idxs[1] - 1;
-        pve1 = pvDat[idx1].PVEs * 100;
-        pve2 = pvDat[idx2].PVEs * 100;
+        var pcDat = x.PC,
+          pvDat = x.PVE,
+          idxs = x.idxs,
+          idx1 = idxs[0] - 1, //Convert to JS indx instead of R indx
+          idx2 = idxs[1] - 1,
+          pve1 = pvDat[idx1].PVEs * 100,
+          pve2 = pvDat[idx2].PVEs * 100;
 
         //Settup x
         var xValue = d => Object.values(d)[idx1],
@@ -233,11 +233,11 @@ HTMLWidgets.widget({
           height = instance.height;
 
         //User opts
-        barColor = x.barColor;
+        var barColor = x.barColor;
 
         //Calculations
-        cont = x.cont;
-        thresh = x.thresh;
+        var cont = x.cont,
+          thresh = x.thresh;
 
         //Settup x
         var xValue = d => d._row,
@@ -301,17 +301,17 @@ HTMLWidgets.widget({
 
         //Plot title
       	svg.append("text")
-          .attr("x", (100)) // I'm not sure on this
+          .attr("x", 0)
           .attr("y", 0 - (margin.top / 3))
-          .attr("text-anchor", "middle")
+          .attr("text-anchor", "left")
           .style("font-size", "16px")
           .text("Contribution (%) of Variables to " + component);
 
         //Return button
         svg.append("text")
-          .attr("x", (width - width / 10)) // Or this
+          .attr("x", (width - width / 10)) // Sure there's a better way to do this
           .attr("y", 0 - (margin.top / 3))
-          .attr("text-anchor", "middle")
+          .attr("text-anchor", "right")
           .style("font-size", "12px")
           .style("text-decoration", "underline")
           .style("cursor", "pointer")
@@ -327,7 +327,7 @@ HTMLWidgets.widget({
 
   resize: function(el, width, height, instance) {
 
-    // TODO: code to re-render the widget with a new size
+    // Re render at new size
     d3.select("svg")
       .attr("width", width)
       .attr("height", height);
