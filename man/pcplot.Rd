@@ -12,8 +12,8 @@ pcplot(data, clusters, barColor = "steelblue",
 Scaled data is preferred as PCA does not work the same with non-scaled data.}
 
 \item{clusters}{A named integer matrix of clusters where names are the row names
-of the dataframe and integers are the integer value of the row's associated cluster.
-This can be obtained from a function such as \code{ stats::kmeans()$clusters }.}
+of the above dataframe and integers are the integer value of the row's associated cluster.
+This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 
 \item{barColor}{The color to use for the bar-chart fill. May be any html color (hex or named).}
 

@@ -1,16 +1,43 @@
-#' <Add Title>
+#' Parallel Coordinates Plot for Clustering
 #'
-#' <Add Description>
+#' The function creates an interactive parallel coordinates plot detailing each
+#' dimension and the cluster associated with each observation.
+#'
+#' @param data A dataframe of numeric columns.
+#'
+#' @param clusters A named integer matrix of clusters where names are the row names
+#' of the above dataframe and integers are the integer value of the row's associated cluster.
+#' This can be obtained from a function such as \code{ stats::kmeans()$cluster }.
+#'
+#' @param colorScheme The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
+#' or a vector of html colors (hex or named).
+#'
+#' @details
+#' \itemize{
+#'   \item Hover over lines to display row label
+#'   \item Click on a line to fade out all lines except the associated cluster
+#'   \item Click on another line to bold this line as well
+#'   \item Clicking a second time on a line will fade it out
+#' }
+#'
+#' #' @examples
+#' \dontrun{
+#'
+#' df <- state.x77
+#' clus <- kmeans(data_scaled, 5)$cluster
+#' pacoplot(data = df, clusters = clus)
+#'
+#' }
 #'
 #' @import htmlwidgets
 #'
 #' @export
 pacoplot <- function(data,
-                           clusters,
-                           colorScheme = "schemeCategory10",
-                           width = NULL,
-                           height = NULL,
-                           elementId = NULL) {
+                     clusters,
+                     colorScheme = "schemeCategory10",
+                     width = NULL,
+                     height = NULL,
+                     elementId = NULL) {
 
   data <- data.frame(data, clusters)
 
