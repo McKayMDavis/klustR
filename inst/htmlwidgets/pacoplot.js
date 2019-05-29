@@ -20,7 +20,6 @@ HTMLWidgets.widget({
     d3.select(el)
       .append("div")
       .attr("class", "tooltip")
-      .attr("id", "tooltip")
       .style("position", "absolute")
       .style("width", "200px")
       .style("height", "28px")
@@ -169,10 +168,10 @@ HTMLWidgets.widget({
       .attr("transform", d => "translate(" + xScale(d) + ")")
       .each(function(d) { d3.select(this).call(d3.axisLeft().scale(yScale[d])); })
       .append("text")
-        .style("text-anchor", "middle")
-        .attr("y", -9)
-        .text(d => d)
-        .style("fill", "black");
+      .style("text-anchor", "middle")
+      .attr("y", -9)
+      .text(d => d)
+      .style("fill", "black");
 
   }
 });

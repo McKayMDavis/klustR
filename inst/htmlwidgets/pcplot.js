@@ -20,7 +20,6 @@ HTMLWidgets.widget({
     var tooltip = d3.select(el)
       .append("div")
       .attr("class", "tooltip")
-      .attr("id", "tooltip")
       .style("position", "absolute")
       .style("width", "200px")
       .style("height", "28px")
@@ -161,10 +160,10 @@ HTMLWidgets.widget({
               .transition()
               .duration(200)
               .style("opacity", 0.1);
-            tooltip.style("opacity", 1)
-              .html(d._row)
+            tooltip.html(d._row)
               .style("left", (d3.event.pageX + 5) + "px")
-              .style("top", (d3.event.pageY - 28) + "px");
+              .style("top", (d3.event.pageY - 28) + "px")
+              .style("opacity", 1);
           })
           .on("mouseout", function(d) {
             svg.selectAll(".dot").transition()
