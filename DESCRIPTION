@@ -1,10 +1,15 @@
 Package: klustR
-Title: Dynamic Cluster Visualizations
+Title: D3 Dynamic Cluster Visualizations
+Description: Creates dynamic principal components and parallel coordinates visualizations for clustering (made for k-means).
 Version: 0.0.0.9000
 Authors@R: person("McKay", "Davis", email = "mckaymdavis@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+URL: https://github.com/McKayMDavis/klustR
+BugReports: https://github.com/McKayMDavis/klustR/issues
+License: GPL (>= 3)
 Depends: R (>= 3.5.0)
-License: What license is it under?
+Imports: 
+	htmlwidgets (>= 0.3.2),
+	jsonlite
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

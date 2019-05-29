@@ -21,7 +21,7 @@ This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 or a vector of html colors (hex or named).}
 }
 \description{
-The function reduces dimensionality to 2D using principal component analysis (PCA)
+Reduces dimensionality to 2D using principal component analysis (PCA)
 and displays a dynamic visualization of two principal components (PC).
 }
 \details{

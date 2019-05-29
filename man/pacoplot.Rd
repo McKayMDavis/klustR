@@ -18,7 +18,7 @@ This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 or a vector of html colors (hex or named).}
 }
 \description{
-The function creates an interactive parallel coordinates plot detailing each
+Creates an interactive parallel coordinates plot detailing each
 dimension and the cluster associated with each observation.
 }
 \details{

@@ -1,6 +1,6 @@
 #' Principal Component Plot for K-Means Clustering
 #'
-#' The function reduces dimensionality to 2D using principal component analysis (PCA)
+#' Reduces dimensionality to 2D using principal component analysis (PCA)
 #' and displays a dynamic visualization of two principal components (PC).
 #'
 #' @param data A dataframe of numeric columns.

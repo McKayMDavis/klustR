@@ -1,6 +1,6 @@
 #' Parallel Coordinates Plot for Clustering
 #'
-#' The function creates an interactive parallel coordinates plot detailing each
+#' Creates an interactive parallel coordinates plot detailing each
 #' dimension and the cluster associated with each observation.
 #'
 #' @param data A dataframe of numeric columns.
