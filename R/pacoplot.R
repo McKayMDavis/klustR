@@ -5,24 +5,31 @@
 #' @import htmlwidgets
 #'
 #' @export
-parallelcoords <- function(data, clusters, width = NULL, height = NULL, elementId = NULL) {
+pacoplot <- function(data,
+                           clusters,
+                           colorScheme = "schemeCategory10",
+                           width = NULL,
+                           height = NULL,
+                           elementId = NULL) {
 
   data <- data.frame(data, clusters)
 
   # This little guy just orders the clusters so that the legend in the graphic is ordered
   data <- data[order(clusters),]
 
-  # Convert data to json
+  # Convert to json
   data_json <- jsonlite::toJSON(x = data, dataframe = "rows")
+  json_colorScheme <- jsonlite::toJSON(x = colorScheme)
 
   # forward options using x
   x = list(
-    data = data_json
+    data = data_json,
+    colorScheme = json_colorScheme
   )
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'parallelcoords',
+    name = 'pacoplot',
     x,
     width = width,
     height = height,
@@ -45,16 +52,16 @@ parallelcoords <- function(data, clusters, width = NULL, height = NULL, elementI
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @name parallelcoords-shiny
+#' @name pacoplot-shiny
 #'
 #' @export
-parallelcoordsOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'parallelcoords', width, height, package = 'klustR')
+pacoplotOutput <- function(outputId, width = '100%', height = '400px'){
+  htmlwidgets::shinyWidgetOutput(outputId, 'pacoplot', width, height, package = 'klustR')
 }
 
-#' @rdname parallelcoords-shiny
+#' @rdname pacoplot-shiny
 #' @export
-renderParallelcoords <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderpacoplot <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  htmlwidgets::shinyRenderWidget(expr, parallelcoordsOutput, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, pacoplotOutput, env, quoted = TRUE)
 }

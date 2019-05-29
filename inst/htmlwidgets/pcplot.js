@@ -332,6 +332,9 @@ HTMLWidgets.widget({
       .attr("width", width)
       .attr("height", height);
 
+    //Clear out old stuff
+    d3.select("svg").selectAll("*").remove();
+
     //Re render
     if (instance.currPlot == "pca") {
       this.renderValue(el, instance.x, instance);
@@ -353,10 +356,9 @@ HTMLWidgets.widget({
     instance.width = width;
     instance.height = height;
 
-    //Clear out old stuff
-    d3.select("svg").selectAll("*").remove();
-
-    //Render with whatever function is passed to it...could be anything! Ice cream maybe, or a clown riding a lawn mower...you know...or just a bar chart or dot plot...
+    //Render with whatever function is passed to it...could be anything!
+    //Ice cream maybe, or a clown riding a lawn mower...you know...or just
+    //a bar chart or dot plot...
     fun(instance);
   }
 });
