@@ -9,8 +9,11 @@
 #' of the above dataframe and integers are the integer value of the row's associated cluster.
 #' This can be obtained from a function such as \code{ stats::kmeans()$cluster }.
 #'
-#' @param colorScheme The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
-#' or a vector of html colors (hex or named).
+#' @param colorScheme The color scheme of the plot. May be a preconfigured D3 ordinal color scheme
+#' or a vector of html colors (hex or named) of the same length as the number of clusters.
+#'
+#' @param labelSizes A number or list of any combination of parameters shown:
+#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
 #'
 #' @details
 #' \itemize{
@@ -20,12 +23,20 @@
 #'   \item Clicking a second time on a line will fade it out
 #' }
 #'
-#' #' @examples
+#' @examples
 #' \dontrun{
 #'
+#' # Barebones
 #' df <- state.x77
 #' clus <- kmeans(data_scaled, 5)$cluster
 #' pacoplot(data = df, clusters = clus)
+#'
+#' # With options
+#' df <- state.x77
+#' clus <- kmeans(data_scaled, 5)$cluster
+#' pacoplot(data = df, clusters = clus,
+#'          colorScheme = c("red", "green", "orange", "blue", "yellow"),
+#'          labelSizes = list(yaxis = 16, yticks = 12))
 #'
 #' }
 #'
@@ -37,21 +48,63 @@ pacoplot <- function(data,
                      colorScheme = "schemeCategory10",
                      width = NULL,
                      height = NULL,
-                     elementId = NULL) {
+                     labelSizes = NULL) {
+  # Parameter checks
+  if (typeof(colorScheme) != "character" && typeof(colorScheme) != "list") {
+    stop("colorScheme must be of type character or a list of colors")
+  }
+  if (!is.null(labelSizes) &&
+      typeof(labelSizes) != "list" &&
+      typeof(labelSizes) != "double") {
+    stop("labelSizes must be of type double or a list of arguments")
+  }
 
+  # Data parsing
   data <- data.frame(data, clusters)
+
+  av_data <- aggregate(. ~ clusters, data, mean)
+
+  q1_data <- aggregate(. ~ clusters, data, function(x){return(quantile(x, c(0.25)))})
+  q1_data <- reshape(q1_data,
+                     varying = list(2:ncol(q1_data)),
+                     v.names = "quartile",
+                     timevar = "dimensions",
+                     times = colnames(q1_data)[2:ncol(q1_data)],
+                     direction = "long")[,-4]
+
+  q3_data <- aggregate(. ~ clusters, data, function(x){return(quantile(x, c(0.75)))})
+  q3_data <- reshape(q3_data,
+                     varying = list(2:ncol(q3_data)),
+                     v.names = "quartile",
+                     timevar = "dimensions",
+                     times = colnames(q3_data)[2:ncol(q3_data)],
+                     direction = "long")[,-4]
+
+  q_data <- rbind(q1_data, q3_data)
+
+  if (typeof(labelSizes) == "double") {
+    labelSizes <- list(yaxis = labelSizes,
+                       yticks = labelSizes,
+                       tooltip = labelSizes)
+  }
 
   # This little guy just orders the clusters so that the legend in the graphic is ordered
   data <- data[order(clusters),]
 
   # Convert to json
   data_json <- jsonlite::toJSON(x = data, dataframe = "rows")
+  json_av_data <- jsonlite::toJSON(x = av_data, dataframe = "rows")
+  json_q_data <- jsonlite::toJSON(x = q_data, dataframe = "rows")
   json_colorScheme <- jsonlite::toJSON(x = colorScheme)
+  json_labelSizes <- jsonlite::toJSON(labelSizes)
 
   # forward options using x
   x = list(
     data = data_json,
-    colorScheme = json_colorScheme
+    avData = json_av_data,
+    qData = json_q_data,
+    colorScheme = json_colorScheme,
+    labelSizes = json_labelSizes
   )
 
   # create widget
@@ -60,8 +113,7 @@ pacoplot <- function(data,
     x,
     width = width,
     height = height,
-    package = 'klustR',
-    elementId = elementId
+    package = 'klustR'
   )
 }
 

@@ -24,8 +24,7 @@ HTMLWidgets.widget({
       .style("width", "200px")
       .style("height", "28px")
       .style("pointer-events", "none")
-      .style("font-weight", "bold")
-      .style("font-size", "14px");
+      .style("font-weight", "bold");
 
     //Return a bunch of values accessible in the instance object
     return {
@@ -47,7 +46,8 @@ HTMLWidgets.widget({
           height = instance.height;
 
         //User opts
-        var colorScheme = x.colorScheme;
+        var colorScheme = x.colorScheme,
+          labelSizes = x.labelSizes;
 
         //Calculations
         var pcDat = x.PC,
@@ -57,6 +57,9 @@ HTMLWidgets.widget({
           idx2 = idxs[1] - 1,
           pve1 = pvDat[idx1].PVEs * 100,
           pve2 = pvDat[idx2].PVEs * 100;
+
+        //Tooltip
+        tooltip = tooltip.style("font-size", labelSizes.tooltip + "px" || "14px");
 
         //Settup x
         var xValue = d => Object.values(d)[idx1],
@@ -87,6 +90,7 @@ HTMLWidgets.widget({
 
         //X-axis
         svg.append("g")
+          .style("font-size", labelSizes.xticks + "px" || "10px")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis)
@@ -111,10 +115,12 @@ HTMLWidgets.widget({
               instance.pc = "PC1";
               instance.barChart(instance);
         	})
-          .text("PC1 - " + Number.parseFloat(pve1).toFixed(2) + "%");
+          .text("PC1 - " + Number.parseFloat(pve1).toFixed(2) + "%")
+          .style("font-size", labelSizes.xaxis + "px" || "10px");
 
         //Y-axis
         svg.append("g")
+          .style("font-size", labelSizes.yticks + "px" || "10px")
           .attr("class", "y axis")
           .call(yAxis)
           .append("text")
@@ -140,7 +146,8 @@ HTMLWidgets.widget({
               instance.pc = "PC2";
               instance.barChart(instance);
         	})
-          .text("PC2 - " + Number.parseFloat(pve2).toFixed(2) + "%");
+          .text("PC2 - " + Number.parseFloat(pve2).toFixed(2) + "%")
+          .style("font-size", labelSizes.yaxis + "px" || "10px");
 
         //Draw points and add dynamic affects for mouseover points
         svg.selectAll(".dot")
@@ -215,6 +222,7 @@ HTMLWidgets.widget({
           .attr("y", 9)
           .attr("dy", ".35em")
           .style("text-anchor", "end")
+          .style("font-size", labelSizes.legend + "px" || "10px")
           .text(d => d);
     },
 ////////////////////////////////////////////////////////////////////////////////
@@ -232,11 +240,15 @@ HTMLWidgets.widget({
           height = instance.height;
 
         //User opts
-        var barColor = x.barColor;
+        var barColor = x.barColor,
+          labelSizes = x.labelSizes;
 
         //Calculations
         var cont = x.cont,
           thresh = x.thresh;
+
+        //Tooltip
+        tooltip = tooltip.style("font-size", labelSizes.tooltip + "px" || "14px");
 
         //Settup x
         var xValue = d => d._row,
@@ -261,11 +273,13 @@ HTMLWidgets.widget({
 
         //X-axis
       	svg.append("g")
+      	  .style("font-size", labelSizes.xticks + "px" || "10px")
       	  .attr("transform", "translate(0," + height + ")")
       	  .call(xAxis);
 
         //Y-axis
       	svg.append("g")
+      	  .style("font-size", labelSizes.yticks + "px" || "10px")
       	  .call(yAxis);
 
         //Add bars
@@ -303,7 +317,7 @@ HTMLWidgets.widget({
           .attr("x", 0)
           .attr("y", 0 - (margin.top / 3))
           .attr("text-anchor", "left")
-          .style("font-size", "16px")
+          .style("font-size", labelSizes.title + "px" || "16px")
           .text("Contribution (%) of Variables to " + component);
 
         //Return button

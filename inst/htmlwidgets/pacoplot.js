@@ -24,8 +24,7 @@ HTMLWidgets.widget({
       .style("width", "200px")
       .style("height", "28px")
       .style("pointer-events", "none")
-      .style("font-weight", "bold")
-      .style("font-size", "14px");
+      .style("font-weight", "bold");
 
       return {
         x: null
@@ -53,13 +52,17 @@ HTMLWidgets.widget({
 
     //load data from x var
     var data = x.data;
+    var avData = x.avData;
+    var qData = x.qData;
     var colorScheme = x.colorScheme;
+    var labelSizes = x.labelSizes;
 
     //Tooltip
-    var tooltip = d3.select(".tooltip");
+    var tooltip = d3.select(".tooltip")
+      .style("font-size", labelSizes.tooltip + "px" || "14px");
 
     //Set some boundaries and with/height vars
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    var margin = {top: 60, right: 20, bottom: 30, left: 40},
         width = el.offsetWidth - margin.left - margin.right,
         height = el.offsetHeight - margin.top - margin.bottom;
 
@@ -92,10 +95,38 @@ HTMLWidgets.widget({
         d3.scaleOrdinal().range(colorScheme) :
         d3.scaleOrdinal(d3[colorScheme]);
 
-    //Data points
+    //Lines
     function path(d) {
       return d3.line()(dimensions.map(p => [xScale(p), yScale[p](d[p])]));
     }
+
+    //Add mean lines this must be first in case any cluster has only one
+    //observation. It allows the hover to still work.
+    svg.selectAll(".path")
+      .data(avData)
+      .enter()
+      .append("path")
+      .attr("id", "averages")
+      .attr("d",  path)
+      .style("fill", "none")
+      .style("stroke", d => color(cValue(d)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      .style("cursor", "pointer");
+
+    //Add error bars (needed data in long format for this)
+    svg.selectAll(".dot")
+      .data(qData)
+      .enter()
+      .append("ellipse")
+      .attr("id", "quartiles")
+      .attr("rx", 10)
+      .attr("ry", 1.5)
+      .attr("cx", d => xScale(d.dimensions))
+      .attr("cy", d => yScale[d.dimensions](d.quartile))
+      .style("fill", d => color(cValue(d)))
+      .style("stroke-dasharray", 4)
+      .style("opacity", 0);
 
     //Add lines
     svg.selectAll(".path")
@@ -160,18 +191,60 @@ HTMLWidgets.widget({
         }
       });
 
+    //Checkboxes
+    var checks = svg.append("g")
+      .attr("class", "legend")
+      .attr("transform", (d, i) => { return "translate(0," + i * 20 + ")"; });
+
+
+    checks.append("rect")
+      .attr("x", width - 18)
+      .attr("y", -50)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("stroke", "black")
+ 			.style("fill", "white")
+ 			.style("stroke-width", 1)
+      .style("cursor", "pointer")
+      .on("click", function() {
+        var avs = svg.selectAll("#averages");
+        var quar = svg.selectAll("#quartiles");
+        var norm = svg.selectAll("#pathsie");
+        if (avs.style("opacity") != 0.5) {
+          avs.style("opacity", 0.5);
+          quar.style("opacity", 1);
+          norm.style("display", "none");
+          svg.select("rect").style("fill", "black");
+        } else {
+          avs.style("opacity", 0);
+          quar.style("opacity", 0);
+          norm.style("display", "inline-block");
+          svg.select("rect").style("fill", "white");
+        }
+      });
+
+    checks.append("text")
+      .attr("x", width - 24)
+      .attr("y", -41)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .style("font-size", "10px")
+      .text("Toggle Averages");
+
     //Draw axes
     svg.selectAll(".axis")
       .data(dimensions)
       .enter()
       .append("g")
+      .style("font-size", labelSizes.yticks + "px" || "10px")
       .attr("transform", d => "translate(" + xScale(d) + ")")
       .each(function(d) { d3.select(this).call(d3.axisLeft().scale(yScale[d])); })
       .append("text")
       .style("text-anchor", "middle")
       .attr("y", -9)
       .text(d => d)
-      .style("fill", "black");
+      .style("fill", "black")
+      .style("font-size", labelSizes.yaxis + "px" || "10px");
 
   }
 });

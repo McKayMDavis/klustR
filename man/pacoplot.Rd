@@ -5,7 +5,7 @@
 \title{Parallel Coordinates Plot for Clustering}
 \usage{
 pacoplot(data, clusters, colorScheme = "schemeCategory10", width = NULL,
-  height = NULL, elementId = NULL)
+  height = NULL, labelSizes = NULL)
 }
 \arguments{
 \item{data}{A dataframe of numeric columns.}
@@ -14,8 +14,11 @@ pacoplot(data, clusters, colorScheme = "schemeCategory10", width = NULL,
 of the above dataframe and integers are the integer value of the row's associated cluster.
 This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 
-\item{colorScheme}{The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
-or a vector of html colors (hex or named).}
+\item{colorScheme}{The color scheme of the plot. May be a preconfigured D3 ordinal color scheme
+or a vector of html colors (hex or named) of the same length as the number of clusters.}
+
+\item{labelSizes}{A number or list of any combination of parameters shown:
+\code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.}
 }
 \description{
 Creates an interactive parallel coordinates plot detailing each
@@ -28,13 +31,22 @@ dimension and the cluster associated with each observation.
   \item Click on another line to bold this line as well
   \item Clicking a second time on a line will fade it out
 }
-
-#' @examples
+}
+\examples{
 \dontrun{
 
+# Barebones
 df <- state.x77
 clus <- kmeans(data_scaled, 5)$cluster
 pacoplot(data = df, clusters = clus)
 
+# With options
+df <- state.x77
+clus <- kmeans(data_scaled, 5)$cluster
+pacoplot(data = df, clusters = clus,
+         colorScheme = c("red", "green", "orange", "blue", "yellow"),
+         labelSizes = list(yaxis = 16, yticks = 12))
+
 }
+
 }

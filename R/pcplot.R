@@ -13,7 +13,7 @@
 #' @param barColor The color to use for the bar-chart fill. May be any html color (hex or named).
 #'
 #' @param colorScheme The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
-#' or a vector of html colors (hex or named).
+#' or a vector of html colors (hex or named) of the same length as the number of clusters.
 #'
 #' @details
 #' \itemize{
@@ -39,9 +39,32 @@ pcplot <- function(data,
                    barColor = "steelblue",
                    colorScheme = "schemeCategory10",
                    width = NULL,
-                   height = NULL) {
+                   height = NULL,
+                   labelSizes = NULL) {
 
+  # Parameter checks
+  if (typeof(colorScheme) != "character" && typeof(colorScheme) != "list") {
+    stop("colorScheme must be of type character or a list of colors")
+  }
+  if (!is.null(labelSizes) &&
+      typeof(labelSizes) != "list" &&
+      typeof(labelSizes) != "double") {
+    stop("labelSizes must be of type double or a list of arguments")
+  }
+
+
+  # Data parsing
   PC <- getPC(data, clusters)
+
+  if (typeof(labelSizes) == "double") {
+    labelSizes <- list(yaxis = labelSizes,
+                       xaxis = labelSizes,
+                       yticks = labelSizes,
+                       xticks = labelSizes,
+                       legend = labelSizes,
+                       tooltip = labelSizes,
+                       title = labelSizes)
+  }
 
   # This little guy just orders the clusters so that the legend in the graphic is ordered
   PC$PC <- PC$PC[order(clusters),]
@@ -53,6 +76,7 @@ pcplot <- function(data,
   json_cont <- jsonlite::toJSON(x = PC$cont, dataframe = "rows")
   json_thresh <- jsonlite::toJSON(x = PC$thresh)
   json_colorScheme <- jsonlite::toJSON(x = colorScheme)
+  json_labelSizes <- jsonlite::toJSON(x = labelSizes)
 
 
   # forward options using x
@@ -63,7 +87,8 @@ pcplot <- function(data,
     cont = json_cont,
     thresh = json_thresh,
     barColor = barColor,
-    colorScheme = json_colorScheme
+    colorScheme = json_colorScheme,
+    labelSizes = json_labelSizes
   )
 
   # create widget
