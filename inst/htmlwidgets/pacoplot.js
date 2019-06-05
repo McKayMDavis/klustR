@@ -54,6 +54,7 @@ HTMLWidgets.widget({
     var data = x.data;
     var avData = x.avData;
     var qData = x.qData;
+    var qsData = x.qsData;
     var colorScheme = x.colorScheme;
     var labelSizes = x.labelSizes;
 
@@ -115,17 +116,27 @@ HTMLWidgets.widget({
       .style("cursor", "pointer");
 
     //Add error bars (needed data in long format for this)
+    svg.selectAll(".bar")
+  	  .data(qsData)
+  	  .enter().append("rect")
+  	  .attr("id", "quarBars")
+  	  .attr("x", d => xScale(d.dimensions) - 5)
+      .attr("y", d => yScale[d.dimensions](d.q3))
+  	  .attr("width", 10)
+  	  .attr("height", d => (height - yScale[d.dimensions](d.q3)) - (height - yScale[d.dimensions](d.q1)))
+  	  .style("fill", d => color(cValue(d)))
+  	  .style("opacity", 0);
+
     svg.selectAll(".dot")
       .data(qData)
       .enter()
       .append("ellipse")
       .attr("id", "quartiles")
       .attr("rx", 10)
-      .attr("ry", 1.5)
+      .attr("ry", 0.5)
       .attr("cx", d => xScale(d.dimensions))
       .attr("cy", d => yScale[d.dimensions](d.quartile))
       .style("fill", d => color(cValue(d)))
-      .style("stroke-dasharray", 4)
       .style("opacity", 0);
 
     //Add lines
@@ -202,6 +213,7 @@ HTMLWidgets.widget({
       .attr("y", -50)
       .attr("width", 18)
       .attr("height", 18)
+      .attr("id", "checkbox")
       .style("stroke", "black")
  			.style("fill", "white")
  			.style("stroke-width", 1)
@@ -209,17 +221,20 @@ HTMLWidgets.widget({
       .on("click", function() {
         var avs = svg.selectAll("#averages");
         var quar = svg.selectAll("#quartiles");
+        var quarBars = svg.selectAll("#quarBars");
         var norm = svg.selectAll("#pathsie");
         if (avs.style("opacity") != 0.5) {
           avs.style("opacity", 0.5);
           quar.style("opacity", 1);
+          quarBars.style("opacity", 0.2);
           norm.style("display", "none");
-          svg.select("rect").style("fill", "black");
+          svg.select("#checkbox").style("fill", "black");
         } else {
           avs.style("opacity", 0);
           quar.style("opacity", 0);
+          quarBars.style("opacity", 0);
           norm.style("display", "inline-block");
-          svg.select("rect").style("fill", "white");
+          svg.select("#checkbox").style("fill", "white");
         }
       });
 

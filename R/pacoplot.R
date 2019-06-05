@@ -62,7 +62,7 @@ pacoplot <- function(data,
   # Data parsing
   data <- data.frame(data, clusters)
 
-  av_data <- aggregate(. ~ clusters, data, mean)
+  av_data <- aggregate(. ~ clusters, data, median)
 
   q1_data <- aggregate(. ~ clusters, data, function(x){return(quantile(x, c(0.25)))})
   q1_data <- reshape(q1_data,
@@ -80,7 +80,15 @@ pacoplot <- function(data,
                      times = colnames(q3_data)[2:ncol(q3_data)],
                      direction = "long")[,-4]
 
-  q_data <- rbind(q1_data, q3_data)
+  q_data <- rbind(q1_data, q3_data) # This is the data to make the dots
+
+  q1_data_2 <- q1_data
+  q3_data_2 <- q3_data
+  colnames(q1_data_2)[3] <- "q1"
+  colnames(q3_data_2)[3] <- "q3"
+
+  qs_data <- cbind(q1_data_2, q3_data_2)[,-c(4:5)] # This is the data to make the bars
+
 
   if (typeof(labelSizes) == "double") {
     labelSizes <- list(yaxis = labelSizes,
@@ -95,6 +103,7 @@ pacoplot <- function(data,
   data_json <- jsonlite::toJSON(x = data, dataframe = "rows")
   json_av_data <- jsonlite::toJSON(x = av_data, dataframe = "rows")
   json_q_data <- jsonlite::toJSON(x = q_data, dataframe = "rows")
+  json_qs_data <- jsonlite::toJSON(x = qs_data, dataframe = "rows")
   json_colorScheme <- jsonlite::toJSON(x = colorScheme)
   json_labelSizes <- jsonlite::toJSON(labelSizes)
 
@@ -103,6 +112,7 @@ pacoplot <- function(data,
     data = data_json,
     avData = json_av_data,
     qData = json_q_data,
+    qsData = json_qs_data,
     colorScheme = json_colorScheme,
     labelSizes = json_labelSizes
   )
