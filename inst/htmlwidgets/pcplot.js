@@ -47,7 +47,8 @@ HTMLWidgets.widget({
 
         //User opts
         var colorScheme = x.colorScheme,
-          labelSizes = x.labelSizes;
+          labelSizes = x.labelSizes,
+          pcGridlines = x.pcGridlines;
 
         //Calculations
         var pcDat = x.PC,
@@ -87,6 +88,25 @@ HTMLWidgets.widget({
         //Set domain for the data with a buffer so points don't overlap the axes
         xScale.domain([d3.min(pcDat, xValue)-1, d3.max(pcDat, xValue)+1]);
         yScale.domain([d3.min(pcDat, yValue)-1, d3.max(pcDat, yValue)+1]);
+
+        //Add gridlines
+        if (x.pcGridlines) {
+          svg.selectAll("line.horizontalGrid").data(yScale.ticks(10)).enter()
+            .append("line")
+            .attr("x1" , 0)
+            .attr("x2" , width)
+            .attr("y1" , function(d){ return yScale(d);})
+            .attr("y2" , function(d){ return yScale(d);})
+            .attr("stroke" , "lightgrey");
+
+          svg.selectAll("line.verticalGrid").data(xScale.ticks(10)).enter()
+            .append("line")
+            .attr("x1" , function(d){ return xScale(d);})
+            .attr("x2" , function(d){ return xScale(d);})
+            .attr("y1" , 0)
+            .attr("y2" , height)
+            .attr("stroke" , "lightgrey");
+        }
 
         //X-axis
         svg.append("g")
@@ -241,7 +261,8 @@ HTMLWidgets.widget({
 
         //User opts
         var barColor = x.barColor,
-          labelSizes = x.labelSizes;
+          labelSizes = x.labelSizes,
+          barGridlines = x.barGridlines;
 
         //Calculations
         var cont = x.cont,
@@ -270,6 +291,17 @@ HTMLWidgets.widget({
         //Domains
       	xScale.domain(cont.map(xValue));
       	yScale.domain([0, d3.max(cont, yValue)]);
+
+      	//Add gridlines
+      	if (x.barGridlines) {
+          svg.selectAll("line.horizontalGrid").data(yScale.ticks(10)).enter()
+            .append("line")
+            .attr("x1" , 0)
+            .attr("x2" , width)
+            .attr("y1" , function(d){ return yScale(d);})
+            .attr("y2" , function(d){ return yScale(d);})
+            .attr("stroke" , "lightgrey");
+        }
 
         //X-axis
       	svg.append("g")

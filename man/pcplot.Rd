@@ -5,7 +5,8 @@
 \title{Principal Component Plot for K-Means Clustering}
 \usage{
 pcplot(data, clusters, barColor = "steelblue",
-  colorScheme = "schemeCategory10", width = NULL, height = NULL)
+  colorScheme = "schemeCategory10", width = NULL, height = NULL,
+  labelSizes = NULL, pcGridlines = FALSE, barGridlines = FALSE)
 }
 \arguments{
 \item{data}{A dataframe of numeric columns.
@@ -19,6 +20,17 @@ This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 
 \item{colorScheme}{The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
 or a vector of html colors (hex or named) of the same length as the number of clusters.}
+
+\item{width}{The width of the plot window.}
+
+\item{height}{The height of the plot window.}
+
+\item{labelSizes}{A number or list of any combination of parameters shown:
+\code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.}
+
+\item{pcGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?}
+
+\item{barGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the bar-charts?}
 }
 \description{
 Reduces dimensionality to 2D using principal component analysis (PCA)

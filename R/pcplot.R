@@ -15,6 +15,17 @@
 #' @param colorScheme The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
 #' or a vector of html colors (hex or named) of the same length as the number of clusters.
 #'
+#' @param width The width of the plot window.
+#'
+#' @param height The height of the plot window.
+#'
+#' @param labelSizes A number or list of any combination of parameters shown:
+#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
+#'
+#' @param pcGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?
+#'
+#' @param barGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the bar-charts?
+#'
 #' @details
 #' \itemize{
 #'   \item Clicking on axis labels will display a bar-chart of PC contribution
@@ -40,7 +51,9 @@ pcplot <- function(data,
                    colorScheme = "schemeCategory10",
                    width = NULL,
                    height = NULL,
-                   labelSizes = NULL) {
+                   labelSizes = NULL,
+                   pcGridlines = FALSE,
+                   barGridlines = FALSE) {
 
   # Parameter checks
   if (typeof(colorScheme) != "character" && typeof(colorScheme) != "list") {
@@ -88,7 +101,9 @@ pcplot <- function(data,
     thresh = json_thresh,
     barColor = barColor,
     colorScheme = json_colorScheme,
-    labelSizes = json_labelSizes
+    labelSizes = json_labelSizes,
+    pcGridlines = pcGridlines,
+    barGridlines = barGridlines
   )
 
   # create widget

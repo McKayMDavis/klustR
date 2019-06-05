@@ -12,6 +12,10 @@
 #' @param colorScheme The color scheme of the plot. May be a preconfigured D3 ordinal color scheme
 #' or a vector of html colors (hex or named) of the same length as the number of clusters.
 #'
+#' @param width The width of the plot window.
+#'
+#' @param height The height of the plot window.
+#'
 #' @param labelSizes A number or list of any combination of parameters shown:
 #' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
 #'
