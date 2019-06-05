@@ -86,12 +86,10 @@ pacoplot <- function(data,
 
   q_data <- rbind(q1_data, q3_data) # This is the data to make the dots
 
-  q1_data_2 <- q1_data
-  q3_data_2 <- q3_data
-  colnames(q1_data_2)[3] <- "q1"
-  colnames(q3_data_2)[3] <- "q3"
+  colnames(q1_data)[3] <- "q1"
+  colnames(q3_data)[3] <- "q3"
 
-  qs_data <- cbind(q1_data_2, q3_data_2)[,-c(4:5)] # This is the data to make the bars
+  qs_data <- cbind(q1_data, q3_data)[,-c(4:5)] # This is the data to make the bars
 
 
   if (typeof(labelSizes) == "double") {
@@ -127,7 +125,11 @@ pacoplot <- function(data,
     x,
     width = width,
     height = height,
-    package = 'klustR'
+    package = 'klustR',
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      viewer.padding = 0,
+      browser.fill = TRUE
+    )
   )
 }
 
