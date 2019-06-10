@@ -64,10 +64,50 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="klustr" class="section level1">
+<div id="dynamic-d3-js-based-k-means-clustering-vizualizations-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#klustr" class="anchor"></a>klustR</h1></div>
-<p>Cluster visualization package for K-Means Clustering algorithm or really anything that has ordinal data and clusters.</p>
+<a href="#dynamic-d3-js-based-k-means-clustering-vizualizations-in-r" class="anchor"></a>Dynamic D3.js Based K-Means Clustering Vizualizations in R</h1></div>
+<p>This package provides methods for dynamically visualizing k-means clustering data or any ordinal data and its associated clusters, though the original intention was to provide users with a more user friendly visualization tool for k-means clustering.</p>
+<p>Version</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Use requires package <code>htmlwidgets</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ramnathv/htmlwidgets"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"McKayMDavis/klustR"</span>)</a></code></pre></div>
+</div>
+<div id="basic-usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#basic-usage" class="anchor"></a>Basic Usage</h2>
+<div id="pcplot-a-dynamic-visualization-of-dimensionally-reduced-data" class="section level4">
+<h4 class="hasAnchor">
+<a href="#pcplot-a-dynamic-visualization-of-dimensionally-reduced-data" class="anchor"></a><code>pcplot</code>, a dynamic visualization of dimensionally reduced data:</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">scaled_df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(state.x77)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">clus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans</a></span>(data_scaled, <span class="dv">5</span>)<span class="op">$</span>cluster</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/pcplot.html">pcplot</a></span>(<span class="dt">data =</span> data_scaled, <span class="dt">clusters =</span> clus)</a></code></pre></div>
+<p>Things to note:</p>
+<ul>
+<li><p>Clicking on an axis label will display a bar-chart of each column’s contribution percentage to that particular dimension or principal component</p></li>
+<li><p>Hovering over points displays the label</p></li>
+<li><p>Clicking on a color on the legend highlights the associated cluster</p></li>
+</ul>
+</div>
+<div id="pacoplot-a-dynamic-parallel-coordinates-plot" class="section level4">
+<h4 class="hasAnchor">
+<a href="#pacoplot-a-dynamic-parallel-coordinates-plot" class="anchor"></a><code>pacoplot</code>, a dynamic parallel coordinates plot:</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">df &lt;-<span class="st"> </span>state.x77</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">clus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans</a></span>(data_scaled, <span class="dv">5</span>)<span class="op">$</span>cluster</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="reference/pacoplot.html">pacoplot</a></span>(<span class="dt">data =</span> df, <span class="dt">clusters =</span> clus)</a></code></pre></div>
+<p>Things to note:</p>
+<ul>
+<li><p>Hovering over a line displays the label</p></li>
+<li><p>Clicking on a line highlights the associated cluster</p></li>
+<li><p>Clicking on the “Toggle Averages” box displays median lines and 1st and 3rd quartile intervals for each cluster</p></li>
+</ul>
+<p>Visit <a href="https://mckaymdavis.github.io/klustR/">website</a> for more details.</p>
+</div>
+</div>
 </div>
   </div>
 

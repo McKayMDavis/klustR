@@ -113,7 +113,7 @@ dimension and the cluster associated with each observation.</p>
     </div>
 
     <pre class="usage"><span class='fu'>pacoplot</span>(<span class='no'>data</span>, <span class='no'>clusters</span>, <span class='kw'>colorScheme</span> <span class='kw'>=</span> <span class='st'>"schemeCategory10"</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labelSizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labelSizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,8 +143,14 @@ or a vector of html colors (hex or named) of the same length as the number of cl
     </tr>
     <tr>
       <th>labelSizes</th>
-      <td><p>A number or list of any combination of parameters shown:
+      <td><p>A number or list of any combination of parameters shown that define the label sizes.
 <code><a href='https://www.rdocumentation.org/packages/base/topics/list'> list(yaxis = 12, yticks = 10, tooltip = 15) </a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>measures</th>
+      <td><p>A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
+Defaults to the options shown (median and 1st and 3rd quartile). <br />
+<code><a href='https://www.rdocumentation.org/packages/base/topics/list'> list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) </a></code></p></td>
     </tr>
     </table>
     
