@@ -25,7 +25,7 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 
 \item{height}{The height of the plot window.}
 
-\item{labelSizes}{A number or list of any combination of parameters shown:
+\item{labelSizes}{A number or list of any combination of parameters shown that define the label sizes.
 \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.}
 
 \item{pcGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?}

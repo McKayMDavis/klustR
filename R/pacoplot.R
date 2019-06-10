@@ -16,8 +16,12 @@
 #'
 #' @param height The height of the plot window.
 #'
-#' @param labelSizes A number or list of any combination of parameters shown:
+#' @param labelSizes A number or list of any combination of parameters shown that define the label sizes.
 #' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
+#'
+#' @param measures A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
+#' Defaults to the options shown (median and 1st and 3rd quartile).
+#' \code{ list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) }.
 #'
 #' @details
 #' \itemize{
@@ -52,7 +56,8 @@ pacoplot <- function(data,
                      colorScheme = "schemeCategory10",
                      width = NULL,
                      height = NULL,
-                     labelSizes = NULL) {
+                     labelSizes = NULL,
+                     measures = NULL) {
   # Parameter checks
   if (typeof(colorScheme) != "character" && typeof(colorScheme) != "list") {
     stop("colorScheme must be of type character or a list of colors")
@@ -64,11 +69,32 @@ pacoplot <- function(data,
   }
 
   # Data parsing
+  if (!is.null(measures)) {
+    if (!is.null(measures$avg)) {
+      avgFun <- measures$avg
+    } else {
+      avgFun <- median
+    }
+
+    if (!is.null(measures$lower)) {
+      lowFun <- measures$lower
+    } else {
+      lowFun <- function(x){return(quantile(x, c(0.25)))}
+    }
+
+    if (!is.null(measures$upper)) {
+      upFun <- measures$upper
+    } else {
+      upFun <- function(x){return(quantile(x, c(0.75)))}
+    }
+  }
+
+
   data <- data.frame(data, clusters)
 
-  av_data <- aggregate(. ~ clusters, data, median)
+  av_data <- aggregate(. ~ clusters, data, avgFun)
 
-  q1_data <- aggregate(. ~ clusters, data, function(x){return(quantile(x, c(0.25)))})
+  q1_data <- aggregate(. ~ clusters, data, lowFun)
   q1_data <- reshape(q1_data,
                      varying = list(2:ncol(q1_data)),
                      v.names = "quartile",
@@ -76,7 +102,7 @@ pacoplot <- function(data,
                      times = colnames(q1_data)[2:ncol(q1_data)],
                      direction = "long")[,-4]
 
-  q3_data <- aggregate(. ~ clusters, data, function(x){return(quantile(x, c(0.75)))})
+  q3_data <- aggregate(. ~ clusters, data, upFun)
   q3_data <- reshape(q3_data,
                      varying = list(2:ncol(q3_data)),
                      v.names = "quartile",

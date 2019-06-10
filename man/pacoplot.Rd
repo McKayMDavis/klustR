@@ -5,7 +5,7 @@
 \title{Parallel Coordinates Plot for Clustering}
 \usage{
 pacoplot(data, clusters, colorScheme = "schemeCategory10", width = NULL,
-  height = NULL, labelSizes = NULL)
+  height = NULL, labelSizes = NULL, measures = NULL)
 }
 \arguments{
 \item{data}{A dataframe of numeric columns.}
@@ -21,8 +21,12 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 
 \item{height}{The height of the plot window.}
 
-\item{labelSizes}{A number or list of any combination of parameters shown:
+\item{labelSizes}{A number or list of any combination of parameters shown that define the label sizes.
 \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.}
+
+\item{measures}{A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
+Defaults to the options shown (median and 1st and 3rd quartile).
+\code{ list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) }.}
 }
 \description{
 Creates an interactive parallel coordinates plot detailing each
