@@ -25,8 +25,8 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.}
 
 \item{measures}{A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
-Defaults to the options shown (median and 1st and 3rd quartile).
-\code{ list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) }.}
+Defaults to the options shown (median and 1st and 3rd quartile). \cr
+\code{ list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) }}
 }
 \description{
 Creates an interactive parallel coordinates plot detailing each

@@ -19,8 +19,8 @@
 #'
 #' @param height The height of the plot window.
 #'
-#' @param labelSizes A number or list of any combination of parameters shown that define the label sizes.
-#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
+#' @param labelSizes A number or list of any combination of parameters shown that define the label sizes. \cr
+#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }
 #'
 #' @param pcGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?
 #'
