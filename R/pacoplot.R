@@ -157,28 +157,13 @@ pacoplot <- function(data,
   )
 }
 
-#' Shiny bindings for klustR
-#'
-#' Output and render functions for using klustR within Shiny
-#' applications and interactive Rmd documents.
-#'
-#' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
-#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
-#'   string and have \code{'px'} appended.
-#' @param expr An expression that generates a klustR
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
-#'   is useful if you want to save an expression in a variable.
-#'
-#' @name pacoplot-shiny
-#'
+#' @rdname klustR-shiny
 #' @export
 pacoplotOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'pacoplot', width, height, package = 'klustR')
 }
 
-#' @rdname pacoplot-shiny
+#' @rdname klustR-shiny
 #' @export
 renderpacoplot <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted

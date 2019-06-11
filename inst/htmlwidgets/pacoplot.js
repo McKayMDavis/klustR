@@ -12,11 +12,12 @@ HTMLWidgets.widget({
     // SVG
     d3.select(el).append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      .attr("id", "pacoplotSVG");
 
     // Tooltip
     d3.select(el).append("div")
-      .attr("class", "tooltip")
+      .attr("id", "pacoTool")
       .style("position", "absolute")
       .style("width", "200px")
       .style("height", "28px")
@@ -32,12 +33,12 @@ HTMLWidgets.widget({
   resize: function(el, width, height, instance) {
 
     // Re render at new size
-    d3.select("svg")
+    d3.select("#pacoplotSVG")
       .attr("width", width)
       .attr("height", height);
 
     // Clear out old stuff
-    d3.select("svg").selectAll("*").remove();
+    d3.select("#pacoplotSVG").selectAll("*").remove();
 
     // Re render
     this.renderValue(el, instance.x, instance);
@@ -59,7 +60,7 @@ HTMLWidgets.widget({
       qsData = x.qsData;
 
     // Tooltip
-    var tooltip = d3.select(".tooltip")
+    var tooltip = d3.select("#pacoTool")
       .style("font-size", labelSizes.tooltip + "px" || "14px");
 
     // Set some boundaries and with/height vars
@@ -68,7 +69,7 @@ HTMLWidgets.widget({
       height = el.offsetHeight - margin.top - margin.bottom;
 
     // Add a plot
-    var svg = d3.select("svg").append("g")
+    var svg = d3.select("#pacoplotSVG").append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Column names
@@ -151,8 +152,8 @@ HTMLWidgets.widget({
         .style("cursor", "pointer")
         .on("mousemove", function(d) {
           tooltip.html(d._row)
-            .style("left", (d3.mouse(this)[0] + 10) + "px")
-            .style("top", d3.mouse(this)[1] + "px")
+            .style("left", (d3.event.pageX + 5) + "px")
+            .style("top", (d3.event.pageY - 28) + "px")
             .style("opacity", 1);
         })
         .on("mouseover", function(d) {

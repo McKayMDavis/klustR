@@ -12,11 +12,12 @@ HTMLWidgets.widget({
     // Initialize an svg
     var svg = d3.select(el).append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      .attr("id", "pcplotSVG");
 
     // Tooltip
-    var tooltip = d3.select(el).append("div")
-      .attr("class", "tooltip")
+    d3.select(el).append("div")
+      .attr("id", "pcTool")
       .style("position", "absolute")
       .style("width", "200px")
       .style("height", "28px")
@@ -57,7 +58,8 @@ HTMLWidgets.widget({
           pve2 = pvDat[idx2].PVEs * 100;
 
         // Set tooltip font size
-        tooltip = tooltip.style("font-size", labelSizes.tooltip + "px" || "14px");
+        var tooltip = d3.select("#pcTool")
+          .style("font-size", labelSizes.tooltip + "px" || "14px");
 
         // Settup x
         var xValue = d => Object.values(d)[idx1],
@@ -78,7 +80,7 @@ HTMLWidgets.widget({
             d3.scaleOrdinal(d3[colorScheme]);
 
         // Append plot
-        var svg = d3.select("svg").append("g")
+        var svg = d3.select("#pcplotSVG").append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         // Set domain for the data with a buffer so points don't overlap the axes
@@ -128,7 +130,7 @@ HTMLWidgets.widget({
                 .style("font-weight", "normal");
             })
             .on("click", function() {
-              d3.select("svg").selectAll("*")
+              d3.select("#pcplotSVG").selectAll("*")
                 .remove();
                 instance.pc = "PC1";
                 instance.barChart(instance);
@@ -157,7 +159,7 @@ HTMLWidgets.widget({
                 .style("font-weight", "normal");
             })
             .on("click", function() {
-              d3.select("svg").selectAll("*")
+              d3.select("#pcplotSVG").selectAll("*")
                 .remove();
                 instance.pc = "PC2";
                 instance.barChart(instance);
@@ -265,7 +267,8 @@ HTMLWidgets.widget({
           thresh = x.thresh;
 
         // Set tooltip font size
-        tooltip = tooltip.style("font-size", labelSizes.tooltip + "px" || "14px");
+        var tooltip = d3.select("#pcTool")
+        .style("font-size", labelSizes.tooltip + "px" || "14px");
 
         // Settup x
         var xValue = d => d._row,
@@ -280,7 +283,7 @@ HTMLWidgets.widget({
           yAxis = d3.axisLeft(yScale);
 
         // Append plot
-        var svg = d3.select("svg").append("g")
+        var svg = d3.select("#pcplotSVG").append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         // Domains
@@ -323,8 +326,8 @@ HTMLWidgets.widget({
         	  .attr("height", d => height - yMap(d))
             .on("mousemove", function(d) {
               tooltip.html(Number.parseFloat(yValue(d)).toFixed(2) + "%")
-                .style("left", (d3.mouse(this)[0] + 10) + "px")
-                .style("top", d3.mouse(this)[1] + "px")
+                .style("left", (d3.event.pageX + 5) + "px")
+                .style("top", (d3.event.pageY - 28) + "px")
                 .style("opacity", 1);
             })
             .on("mouseout", function(d) {
@@ -358,7 +361,7 @@ HTMLWidgets.widget({
           .style("text-decoration", "underline")
           .style("cursor", "pointer")
           .on("click", function() {
-            d3.select("svg").selectAll("*")
+            d3.select("#pcplotSVG").selectAll("*")
               .remove();
               instance.pcaPlot(instance);
           	})
@@ -370,12 +373,12 @@ HTMLWidgets.widget({
   resize: function(el, width, height, instance) {
 
     // Re render at new size
-    d3.select("svg")
+    d3.select("#pcplotSVG")
       .attr("width", width)
       .attr("height", height);
 
     // Clear out old stuff
-    d3.select("svg").selectAll("*").remove();
+    d3.select("#pcplotSVG").selectAll("*").remove();
 
     // Re render
     if (instance.currPlot == "pca") {
