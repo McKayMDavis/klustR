@@ -46,9 +46,19 @@ and displays a dynamic visualization of two principal components (PC).
 \examples{
 \dontrun{
 
+# Barebones
 scaled_df <- scale(state.x77)
 clus <- kmeans(data_scaled, 5)$cluster
 pcplot(data = data_scaled, clusters = clus)
+
+# With Options
+scaled_df <- scale(state.x77)
+clus <- kmeans(data_scaled, 5)$cluster
+pcplot(data = data_scaled, clusters = clus,
+       barColor = "red",
+       colorScheme = c("red", "green", "orange", "blue", "yellow"),
+       labelSizes = list(yaxis = 20, yticks = 15, tooltip = 25),
+       pcGridlines = T, barGridlines = T)
 
 }
 

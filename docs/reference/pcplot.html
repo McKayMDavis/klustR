@@ -173,9 +173,19 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Barebones</span>
 <span class='no'>scaled_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/scale'>scale</a></span>(<span class='no'>state.x77</span>)
 <span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>data_scaled</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span>
 <span class='fu'>pcplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data_scaled</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>)
+
+<span class='co'># With Options</span>
+<span class='no'>scaled_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/scale'>scale</a></span>(<span class='no'>state.x77</span>)
+<span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>data_scaled</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span>
+<span class='fu'>pcplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data_scaled</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>,
+       <span class='kw'>barColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+       <span class='kw'>colorScheme</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"orange"</span>, <span class='st'>"blue"</span>, <span class='st'>"yellow"</span>),
+       <span class='kw'>labelSizes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>yticks</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fl'>25</span>),
+       <span class='kw'>pcGridlines</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>barGridlines</span> <span class='kw'>=</span> <span class='no'>T</span>)
 
 <span class='co'># }</span><div class='input'>
 </div></pre>
