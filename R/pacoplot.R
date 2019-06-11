@@ -69,24 +69,22 @@ pacoplot <- function(data,
   }
 
   # Data parsing
-  if (!is.null(measures)) {
-    if (!is.null(measures$avg)) {
-      avgFun <- measures$avg
-    } else {
-      avgFun <- median
-    }
+  if (!is.null(measures$avg)) {
+    avgFun <- measures$avg
+  } else {
+    avgFun <- median
+  }
 
-    if (!is.null(measures$lower)) {
-      lowFun <- measures$lower
-    } else {
-      lowFun <- function(x){return(quantile(x, c(0.25)))}
-    }
+  if (!is.null(measures$lower)) {
+    lowFun <- measures$lower
+  } else {
+    lowFun <- function(x){return(quantile(x, c(0.25)))}
+  }
 
-    if (!is.null(measures$upper)) {
-      upFun <- measures$upper
-    } else {
-      upFun <- function(x){return(quantile(x, c(0.75)))}
-    }
+  if (!is.null(measures$upper)) {
+    upFun <- measures$upper
+  } else {
+    upFun <- function(x){return(quantile(x, c(0.75)))}
   }
 
 
