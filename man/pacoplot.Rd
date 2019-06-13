@@ -4,8 +4,8 @@
 \alias{pacoplot}
 \title{Parallel Coordinates Plot for Clustering}
 \usage{
-pacoplot(data, clusters, colorScheme = "schemeCategory10", width = NULL,
-  height = NULL, labelSizes = NULL, measures = NULL)
+pacoplot(data, clusters, colorScheme = "schemeCategory10",
+  width = NULL, height = NULL, labelSizes = NULL, measures = NULL)
 }
 \arguments{
 \item{data}{A dataframe of numeric columns.}
