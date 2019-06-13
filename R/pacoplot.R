@@ -73,7 +73,7 @@ pacoplot <- function(data,
   if (!is.null(measures$avg)) {
     avgFun <- measures$avg
   } else {
-    avgFun <- median
+    avgFun <- function(x){return(quantile(x, c(0.50)))}
   }
 
   if (!is.null(measures$lower)) {

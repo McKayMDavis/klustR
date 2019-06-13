@@ -2,7 +2,7 @@
 
 This package provides methods for dynamically visualizing k-means clustering data or any ordinal data and its associated clusters, though the original intention was to provide users with a more user friendly visualization tool for k-means clustering.
 
-Version 
+Development Version: 0.1.9000
 
 ## Installation
 
