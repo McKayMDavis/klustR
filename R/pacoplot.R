@@ -50,6 +50,7 @@
 #' }
 #'
 #' @import htmlwidgets
+#' @import stats
 #'
 #' @export
 pacoplot <- function(data,

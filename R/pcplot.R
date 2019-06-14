@@ -53,6 +53,7 @@
 #' }
 #'
 #' @import htmlwidgets
+#' @import stats
 #'
 #' @export
 pcplot <- function(data,

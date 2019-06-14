@@ -1,3 +1,4 @@
+#' @import stats
 getPC <- function(data, clusters, num_PCs = 2) {
   # Check PVE
   data_cov <- cov(data) #Covariance matrix is a linear transformation of the original data
