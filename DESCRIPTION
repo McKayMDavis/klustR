@@ -5,8 +5,8 @@ Version: 0.1.9000
 Authors@R: person("McKay", "Davis", email = "mckaymdavis@gmail.com", role = c("aut", "cre"))
 URL: https://github.com/McKayMDavis/klustR
 BugReports: https://github.com/McKayMDavis/klustR/issues
-License: GPL (>= 3)
-Depends: R (>= 3.5.0)
+License: GPL-3 | file LICENSE
+Depends: R (>= 3.6.0)
 Imports: 
 	htmlwidgets (>= 0.3.2),
 	jsonlite
