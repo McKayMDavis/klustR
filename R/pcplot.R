@@ -12,7 +12,7 @@
 #'
 #' @param barColor The color to use for the bar-chart fill. May be any html color (hex or named).
 #'
-#' @param colorScheme The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
+#' @param colorScheme The color scheme of the PCA plot. May be a pre-configured D3 ordinal color scheme
 #' or a vector of html colors (hex or named) of the same length as the number of clusters.
 #'
 #' @param width The width of the plot window.
@@ -24,9 +24,9 @@
 #'
 #' @param dotSize A number to adjust the size of the dots.
 #'
-#' @param pcGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?
+#' @param pcGridlines \code{ TRUE } \code{ FALSE } Show grid-lines on the PC plots?
 #'
-#' @param barGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the bar-charts?
+#' @param barGridlines \code{ TRUE } \code{ FALSE } Show grid-lines on the bar-charts?
 #'
 #' @details
 #' \itemize{

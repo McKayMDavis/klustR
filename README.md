@@ -1,4 +1,4 @@
-# Dynamic D3.js Based K-Means Clustering Vizualizations in R
+# Dynamic D3.js Based K-Means Clustering Visualizations in R
 
 This package provides methods for dynamically visualizing k-means clustering data or any ordinal data and its associated clusters, though the original intention was to provide users with a more user friendly visualization tool for k-means clustering.
 

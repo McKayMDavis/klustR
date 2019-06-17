@@ -15,7 +15,7 @@ pacoplot(data, clusters, colorScheme = "schemeCategory10",
 of the above dataframe and integers are the integer value of the row's associated cluster.
 This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 
-\item{colorScheme}{The color scheme of the plot. May be a preconfigured D3 ordinal color scheme
+\item{colorScheme}{The color scheme of the plot. May be a pre-configured D3 ordinal color scheme
 or a vector of html colors (hex or named) of the same length as the number of clusters.}
 
 \item{width}{The width of the plot window.}

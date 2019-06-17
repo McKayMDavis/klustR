@@ -19,7 +19,7 @@ This can be obtained from a function such as \code{ stats::kmeans()$cluster }.}
 
 \item{barColor}{The color to use for the bar-chart fill. May be any html color (hex or named).}
 
-\item{colorScheme}{The color scheme of the PCA plot. May be a preconfigured D3 ordinal color scheme
+\item{colorScheme}{The color scheme of the PCA plot. May be a pre-configured D3 ordinal color scheme
 or a vector of html colors (hex or named) of the same length as the number of clusters.}
 
 \item{width}{The width of the plot window.}
@@ -31,9 +31,9 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 
 \item{dotSize}{A number to adjust the size of the dots.}
 
-\item{pcGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?}
+\item{pcGridlines}{\code{ TRUE } \code{ FALSE } Show grid-lines on the PC plots?}
 
-\item{barGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the bar-charts?}
+\item{barGridlines}{\code{ TRUE } \code{ FALSE } Show grid-lines on the bar-charts?}
 }
 \description{
 Reduces dimensionality to 2D using principal component analysis (PCA)
