@@ -46,6 +46,7 @@ HTMLWidgets.widget({
         // User opts
         var colorScheme = x.colorScheme,
           labelSizes = x.labelSizes,
+          dotSize = Number.parseInt(x.dotSize),
           pcGridlines = x.pcGridlines;
 
         // Calculations
@@ -167,14 +168,14 @@ HTMLWidgets.widget({
             .text("PC2 - " + Number.parseFloat(pve2).toFixed(2) + "%")
             .style("font-size", labelSizes.yaxis + "px" || "10px");
 
-        // Draw points and add dynamic affects for mouseover points
+        // Draw points
         svg.selectAll(".dot")
           .data(pcDat)
           .enter()
           .append("circle")
             .attr("class", "dot")
             .attr("id", d => "dot" + d.clusters)
-            .attr("r", 3.5)
+            .attr("r", dotSize || 3.5)
             .attr("cx", xMap)
             .attr("cy", yMap)
             .style("fill", d => color(cValue(d)))

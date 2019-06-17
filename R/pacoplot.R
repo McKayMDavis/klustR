@@ -17,7 +17,9 @@
 #' @param height The height of the plot window.
 #'
 #' @param labelSizes A number or list of any combination of parameters shown that define the label sizes.
-#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }.
+#' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }
+#'
+#' @param lineSize A number to adjust the size of the lines.
 #'
 #' @param measures A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
 #' Defaults to the options shown (median and 1st and 3rd quartile). \cr
@@ -59,6 +61,7 @@ pacoplot <- function(data,
                      width = NULL,
                      height = NULL,
                      labelSizes = NULL,
+                     lineSize = NULL,
                      measures = NULL) {
   # Parameter checks
   if (typeof(colorScheme) != "character" && typeof(colorScheme) != "list") {
@@ -133,7 +136,8 @@ pacoplot <- function(data,
   json_q_data <- jsonlite::toJSON(x = q_data, dataframe = "rows")
   json_qs_data <- jsonlite::toJSON(x = qs_data, dataframe = "rows")
   json_colorScheme <- jsonlite::toJSON(x = colorScheme)
-  json_labelSizes <- jsonlite::toJSON(labelSizes)
+  labelSizes <- jsonlite::toJSON(labelSizes)
+
 
   # forward options using x
   x = list(
@@ -142,7 +146,8 @@ pacoplot <- function(data,
     qData = json_q_data,
     qsData = json_qs_data,
     colorScheme = json_colorScheme,
-    labelSizes = json_labelSizes
+    labelSizes = labelSizes,
+    lineSize = lineSize
   )
 
   # create widget

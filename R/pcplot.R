@@ -22,6 +22,8 @@
 #' @param labelSizes A number or list of any combination of parameters shown that define the label sizes. \cr
 #' \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }
 #'
+#' @param dotSize A number to adjust the size of the dots.
+#'
 #' @param pcGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?
 #'
 #' @param barGridlines \code{ TRUE } \code{ FALSE } Show gridlines on the bar-charts?
@@ -63,6 +65,7 @@ pcplot <- function(data,
                    width = NULL,
                    height = NULL,
                    labelSizes = NULL,
+                   dotSize = NULL,
                    pcGridlines = FALSE,
                    barGridlines = FALSE) {
 
@@ -113,6 +116,7 @@ pcplot <- function(data,
     barColor = barColor,
     colorScheme = json_colorScheme,
     labelSizes = json_labelSizes,
+    dotSize = dotSize,
     pcGridlines = pcGridlines,
     barGridlines = barGridlines
   )

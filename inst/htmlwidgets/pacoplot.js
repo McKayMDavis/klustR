@@ -51,7 +51,8 @@ HTMLWidgets.widget({
 
     // User opts
     var colorScheme = x.colorScheme,
-      labelSizes = x.labelSizes;
+      labelSizes = x.labelSizes,
+      lineSize = Number.parseInt(x.lineSize);
 
     // Data
     var data = x.data,
@@ -111,7 +112,7 @@ HTMLWidgets.widget({
         .style("fill", "none")
         .style("stroke", d => color(cValue(d)))
         .style("opacity", 0)
-        .style("stroke-width", 2);
+        .style("stroke-width", lineSize || 2);
 
     // Add error bars (needed data in long format for this)
     svg.selectAll(".bar")
@@ -150,6 +151,7 @@ HTMLWidgets.widget({
         .style("stroke", d => color(cValue(d)))
         .style("opacity", 0.5)
         .style("cursor", "pointer")
+        .style("stroke-width", lineSize || 2)
         .on("mousemove", function(d) {
           tooltip.html(d._row)
             .style("left", (d3.event.pageX + 5) + "px")
@@ -157,10 +159,10 @@ HTMLWidgets.widget({
             .style("opacity", 1);
         })
         .on("mouseover", function(d) {
-          d3.select(this).style("stroke-width", 5);
+          d3.select(this).style("stroke-width", lineSize + 3 || 5);
         })
         .on("mouseout", function(d) {
-          d3.select(this).style("stroke-width", 1);
+          d3.select(this).style("stroke-width", lineSize || 2);
           tooltip.style("opacity", 0);
         })
         .on("click", function(d) {

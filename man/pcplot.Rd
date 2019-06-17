@@ -6,7 +6,8 @@
 \usage{
 pcplot(data, clusters, barColor = "steelblue",
   colorScheme = "schemeCategory10", width = NULL, height = NULL,
-  labelSizes = NULL, pcGridlines = FALSE, barGridlines = FALSE)
+  labelSizes = NULL, dotSize = NULL, pcGridlines = FALSE,
+  barGridlines = FALSE)
 }
 \arguments{
 \item{data}{A dataframe of numeric columns.
@@ -27,6 +28,8 @@ or a vector of html colors (hex or named) of the same length as the number of cl
 
 \item{labelSizes}{A number or list of any combination of parameters shown that define the label sizes. \cr
 \code{ list(yaxis = 12, yticks = 10, tooltip = 15) }}
+
+\item{dotSize}{A number to adjust the size of the dots.}
 
 \item{pcGridlines}{\code{ TRUE } \code{ FALSE } Show gridlines on the PC plots?}
 
