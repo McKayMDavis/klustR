@@ -2,7 +2,7 @@
 
 This package provides methods for dynamically visualizing k-means clustering data or any ordinal data and its associated clusters, though the original intention was to provide users with a more user friendly visualization tool for k-means clustering.
 
-Development Version: 0.1.9000
+Development Version: 0.1.0
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/McKayMDavis/klustR.svg?branch=master)](https://travis-ci.org/McKayMDavis/klustR)
 <!-- badges: end -->
