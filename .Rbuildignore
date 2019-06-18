@@ -4,3 +4,4 @@
 ^docs$
 ^\.travis\.yml$
 ^CRAN-RELEASE$
+^vignettes$
