@@ -50,17 +50,17 @@ and displays a dynamic visualization of two principal components (PC).
 
 # Barebones
 scaled_df <- scale(state.x77)
-clus <- kmeans(data_scaled, 5)$cluster
-pcplot(data = data_scaled, clusters = clus)
+clus <- kmeans(scaled_df, 5)$cluster
+pcplot(data = scaled_df, clusters = clus)
 
 # With Options
 scaled_df <- scale(state.x77)
-clus <- kmeans(data_scaled, 5)$cluster
-pcplot(data = data_scaled, clusters = clus,
+clus <- kmeans(scaled_df, 5)$cluster
+pcplot(data = scaled_df, clusters = clus,
        barColor = "red",
        colorScheme = c("red", "green", "orange", "blue", "yellow"),
        labelSizes = list(yaxis = 20, yticks = 15, tooltip = 25),
-       pcGridlines = T, barGridlines = T)
+       pcGridlines = TRUE, barGridlines = TRUE)
 
 
 }

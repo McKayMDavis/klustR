@@ -17,3 +17,4 @@ There are currently no downstream dependencies for this package
 * Removed LICENSE file and LICENSE file reference in DESCRIPTION
 * Added github.io URL to DESCRIPTION URL field
 * Removed \dontrun{} from examples
+* Changed examples that failed check

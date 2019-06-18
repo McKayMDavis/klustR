@@ -37,12 +37,12 @@
 #'
 #' # Barebones
 #' df <- state.x77
-#' clus <- kmeans(data_scaled, 5)$cluster
+#' clus <- kmeans(df, 5)$cluster
 #' pacoplot(data = df, clusters = clus)
 #'
 #' # With options
 #' df <- state.x77
-#' clus <- kmeans(data_scaled, 5)$cluster
+#' clus <- kmeans(df, 5)$cluster
 #' pacoplot(data = df, clusters = clus,
 #'          colorScheme = c("red", "green", "orange", "blue", "yellow"),
 #'          labelSizes = list(yaxis = 16, yticks = 12),
