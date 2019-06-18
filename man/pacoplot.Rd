@@ -44,7 +44,6 @@ dimension and the cluster associated with each observation.
 }
 }
 \examples{
-\dontrun{
 
 # Barebones
 df <- state.x77
@@ -59,6 +58,5 @@ pacoplot(data = df, clusters = clus,
          labelSizes = list(yaxis = 16, yticks = 12),
          measures = list(avg = mean))
 
-}
 
 }

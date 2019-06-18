@@ -36,7 +36,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #'
 #' # Barebones
 #' scaled_df <- scale(state.x77)
@@ -52,7 +51,6 @@
 #'        labelSizes = list(yaxis = 20, yticks = 15, tooltip = 25),
 #'        pcGridlines = T, barGridlines = T)
 #'
-#' }
 #'
 #' @import htmlwidgets
 #' @import stats

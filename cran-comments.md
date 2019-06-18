@@ -11,3 +11,9 @@ There was 1 NOTE on win-builder check:
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package
+
+## Resubmission
+* Edited and elaborated DESCRIPTION Description
+* Removed LICENSE file and LICENSE file reference in DESCRIPTION
+* Added github.io URL to DESCRIPTION URL field
+* Removed \dontrun{} from examples

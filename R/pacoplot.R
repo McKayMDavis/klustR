@@ -34,7 +34,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #'
 #' # Barebones
 #' df <- state.x77
@@ -49,7 +48,6 @@
 #'          labelSizes = list(yaxis = 16, yticks = 12),
 #'          measures = list(avg = mean))
 #'
-#' }
 #'
 #' @import htmlwidgets
 #' @import stats

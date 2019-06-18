@@ -47,7 +47,6 @@ and displays a dynamic visualization of two principal components (PC).
 }
 }
 \examples{
-\dontrun{
 
 # Barebones
 scaled_df <- scale(state.x77)
@@ -63,6 +62,5 @@ pcplot(data = data_scaled, clusters = clus,
        labelSizes = list(yaxis = 20, yticks = 15, tooltip = 25),
        pcGridlines = T, barGridlines = T)
 
-}
 
 }
