@@ -176,15 +176,16 @@ Defaults to the options shown (median and 1st and 3rd quartile). <br />
     <pre class="examples"><div class='input'>
 <span class='co'># Barebones</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>state.x77</span>
-<span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>data_scaled</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span></div><div class='output co'>#&gt; <span class='error'>Error in as.matrix(x): object 'data_scaled' not found</span></div><div class='input'><span class='fu'>pacoplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>)</div><div class='output co'>#&gt; <span class='error'>Error in data.frame(data, clusters): object 'clus' not found</span></div><div class='input'>
+<span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>df</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span>
+<span class='fu'>pacoplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>)
+
 <span class='co'># With options</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>state.x77</span>
-<span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>data_scaled</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span></div><div class='output co'>#&gt; <span class='error'>Error in as.matrix(x): object 'data_scaled' not found</span></div><div class='input'><span class='fu'>pacoplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>,
+<span class='no'>clus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>df</span>, <span class='fl'>5</span>)$<span class='no'>cluster</span>
+<span class='fu'>pacoplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>clusters</span> <span class='kw'>=</span> <span class='no'>clus</span>,
          <span class='kw'>colorScheme</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"orange"</span>, <span class='st'>"blue"</span>, <span class='st'>"yellow"</span>),
          <span class='kw'>labelSizes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>yaxis</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>yticks</span> <span class='kw'>=</span> <span class='fl'>12</span>),
-         <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>avg</span> <span class='kw'>=</span> <span class='no'>mean</span>))</div><div class='output co'>#&gt; <span class='error'>Error in data.frame(data, clusters): object 'clus' not found</span></div><div class='input'>
-
-</div></pre>
+         <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>avg</span> <span class='kw'>=</span> <span class='no'>mean</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
