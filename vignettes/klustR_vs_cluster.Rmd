@@ -28,13 +28,13 @@ clusplot(scaled_df, clus, color = TRUE, shade = TRUE, labels = 2, lines = 0)
 While I like the idea of principal component analysis (PCA) being applied to cluster visualization, there are definitely some flaws with this visual, primarily:
 
 1. Base graphics
-  + Let's face it, they just look outdated
+    + Let's face it, they just look outdated
 2. Labels
-  + Majorly overlap each other (especially in the plot window) making readability non-existent
-  + Not to mention they also cover the data points
-  + And they're the same color as the data points
+    + Majorly overlap each other (especially in the plot window) making readability non-existent
+    + Not to mention they also cover the data points
+    + And they're the same color as the data points
 3. Principal component (PC) contribution
-  + It's lumped together
+    + It's lumped together
 
 These visualizations may have their place, and I in no way discount the rest of `cluster` based on `clusplot()`--just to be clear. I'm sure the author of the package is a far better `R` programmer and statistician than I am.
 

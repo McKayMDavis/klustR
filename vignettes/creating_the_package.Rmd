@@ -1,0 +1,124 @@
+---
+title: "Developing A Dynamic Visualization Tool in R"
+author: "McKay Davis"
+date: "6/18/2019"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(cluster)
+library(klustR)
+```
+
+Developing an `R` package is simple enough. There are some well built tools by `R` gurus such as Hadley Wickham, Ramnath Vaidyanathan, and Jim Hester that make constructing a simple downloadable GitHub hosted package a slick process. However, when you delve into the dark realm of package development using a language other than `R` and the even less lucid world of CRAN submission, things can get real.
+
+## Background
+
+I first thought of developing a dynamic clustering package while studying k-means clustering algorithms in BYU-Idaho's Machine Learning and Data Mining class (an excellent course, by the way). The package we used--and to my understanding the most widely used package--for k-means cluster visualization is called `cluster` and contains the function `clusplot`. I'll demonstrate using `state.x77` found in the `datasets` package:
+
+```{r}
+scaled_df <- scale(state.x77)
+clus <- kmeans(scaled_df, 3)$cluster
+clusplot(scaled_df, clus)
+```
+
+And here's if you add some options:
+
+```{r}
+clusplot(scaled_df, clus, color = TRUE, shade = TRUE, labels = 2, lines = 0)
+```
+
+While I like the idea of principal component analysis (PCA) being applied to cluster visualization, there are definitely some flaws with this visual, primarily:
+
+1. Base graphics
+    + Let's face it, they just look outdated
+2. Labels
+    + Majorly overlap each other (especially in the plot window) making readability non-existent
+    + Not to mention they also cover the data points
+    + And they're the same color as the data points
+3. Principal component (PC) contribution
+    + It's lumped together
+
+These visualizations may have their place, and I in no way discount the rest of `cluster` based on `clusplot()`--just to be clear. I'm sure the author of the package is a far better `R` programmer and statistician than I am.
+
+## Choosing a Project
+
+The time to choose the topic of my Senior Project came and I needed to think of something quick. I'd wanted to learn D3.js for quite some time, but no class on campus offered it. So, I determined to build a new package for `R` which utilized D3.js to create dynamic visualizations for k-means clustering.
+
+The only experience I'd had previous with package development were a couple single-function-ers I made for classmates and one larger one for a job I had which essentially turned out to be a hacky agglomerative mass of functions to interact with the Open Science Framework API in very application specific ways. None of my packages had been submitted to CRAN.
+
+Further, I had no experience whatsoever with D3.js, let alone using it in an `R` package.
+
+## D3.js for Dynamic Visualization
+
+Turns out D3.js is a little more complex than `ggplot`. There was a steep learning curve, and I'm not without complaints, but I quickly realized that there are some beautiful things you can do with a little dynamic magic.
+
+Take the problems of `clusplot()` for example:
+
+1. Base graphics
+    + Well, this one is kind of obvious (D3.js uses SVG)
+2. Labels
+    + If your plot is interactive, labels can be displayed on mouse hover
+3. Principal component contribution
+    + Why not create clickable features to split out contribution and give the user more insight?
+  
+## klustR
+
+`klustR` is a simple package (at least at the point of its initial release--I may add more features later) consisting of six functions: `pcplot()`, `pacoplot()`, and their associated Shiny reactive friends. `pcplot()` seeks to solve the issues with `clusplot()`, while `pacoplot()` is a little something extra--a parallel coordinates plot.
+
+Rather than talk about the features, I'll demonstrate.
+
+### pcplot()
+
+Here's a basic example using the data and k-means analysis from above:
+
+```{r}
+pcplot(scaled_df, clus, pcGridlines = TRUE, barGridlines = TRUE)
+```
+
+Some things to note:
+
+* Hovering over a point displays its label
+* Axis labels show the percent contribution individually
+* Clicking on a color in the legend highlights a cluster
+* Clicking on an axis label (i.e. "PC2 - 20.40%") displays a bar-chart showing the contribution of each column to that PC
+
+We've also got options here. We can change color scales, label sizes, point sizes, and toggle grid-lines.
+
+### pacoplot()
+
+Another great option for cluster visualization is the parallel coordinates plot.
+
+Here's an example:
+
+```{r}
+pacoplot(state.x77, clus)
+```
+
+Some things to note:
+
+* Each axis is a column in the original data with its natural scale
+* Hovering over a line displays its label
+* Clicking on a line will display all the observations in the associated cluster
+  + Multiple clusters can be viewed at the same time
+* Clicking "Toggle Averages" displays the median observation in each cluster with bars indicating the 1st and 3rd quartile for each axis for each cluster
+
+`pacoplot()` has the same options as `pcplot()` except grid-lines as that would make no sense on a parallel coordinates plot, and with the addition of `measures` which allows the user to specify their own functions to be evaluated for the average lines and the upper and lower bounds of the intervals.
+
+## Things I Learned
+
+### D3.js
+
+D3.js is a wonderful tool for building some very high-end visualizations. However, it takes time. You'd be much better off building simple visualizations in `ggplot`. Furthermore, iterating through data for different types of plot components can be a bit of a pain. To illustrate, I had to use three different JSON Objects just to create the average lines, bars, and bar lines for `pacoplot()`. I'm positive there are better ways to do what I did, but they aren't intuitive for the beginner or casual plotter.
+
+### Principal Component Analysis
+
+Despite taking many statistics classes and being currently enrolled in a linear algebra class, I'd never heard of PCA before. For those who may be unfamiliar with it, you can think of it as a simple method for reducing dimensionality in data while maintaining as much information about the variability in the data as possible. In even simpler terms, it turns a lot of columns into less columns.
+
+Long story short, I learned PCA by following some very informative tutorials such as [this](https://uc-r.github.io/pca). I learned about eigenvectors and eigenvalues and how these could be used to gather information about variance to then be applied in dimensionality reduction.
+
+I ended up writing my own PCA calculating function to be used in `klustR` that fulfills its specific needs. This can be found in the `klustR` [GitHub repository in utils.R](https://github.com/McKayMDavis/klustR/blob/master/R/utils.R).
+
+### Submitting to CRAN
+
+[CRAN](https://cran.r-project.org) is "The Comprehensive R Archive Network." It is volunteer run and a stickler for rules. CRAN has a very [lengthy set of requirements](http://r-pkgs.had.co.nz/check.html#check-checks) that a package must meet in order to even be considered by a real human being for candidacy in their repository. If you've submitted a package before, and it was accepted on your first try, count yourself remarkably lucky as Hadley Wickham himself says he frequently has packages rejected by CRAN. CRAN volunteers can be exceptionally rude, so don't take it personally, they just have a lot on their plate. Here's a [great resource](http://r-pkgs.had.co.nz/release.html) that I followed to submit `klustR`.
