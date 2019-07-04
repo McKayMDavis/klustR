@@ -1,7 +1,5 @@
 ---
 title: "Developing A Dynamic Visualization Tool in R"
-author: "McKay Davis"
-date: "6/18/2019"
 output: html_document
 ---
 ```{r setup, include=FALSE}
